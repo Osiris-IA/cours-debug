@@ -43,7 +43,7 @@ pecl install xdebug
 php --ini
 
 # Éditer php.ini (remplacer par votre chemin)
-nano /opt/homebrew/etc/php/8.2/php.ini
+nano CHEMIN_DU_FICHIER_INI.ini
 ```
 
 Ajouter à la fin :
