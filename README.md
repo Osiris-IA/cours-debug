@@ -31,9 +31,13 @@
 - Propriétés JSON inexistantes
 - Await manquant
 - Pas de gestion d'erreurs
-- Paramètres d'URL incorrects
+- Paramètres d'URL incorrects (? vs &)
 - Méthodes JavaScript mal orthographiées (appendChild vs appendchild)
 - Promesses non résolues
+- Headers HTTP mal nommés (Authorization vs Authentification)
+- Types de réponse incorrects (.json() sans await)
+- Clés d'objets manquantes ou mal orthographiées
+- Noms de paramètres de requête incorrects
 
 ## Utilisation
 
@@ -46,6 +50,7 @@
 
 ## Outils recommandés
 
+**Pour HTML/CSS/JavaScript :**
 - Navigateur moderne (Chrome)
 - Console développeur (F12)
 - Éditeur de code (VS Code, Sublime Text, etc.)
@@ -53,3 +58,8 @@
   - Live Server (pour VS Code)
   - DevTools (intégré au navigateur)
 
+**Pour PHP :**
+- PHP 8.x installé
+- Xdebug pour le debug
+- Serveur local (XAMPP, MAMP ou `php -S`)
+- Extension PHP Debug pour VS Code

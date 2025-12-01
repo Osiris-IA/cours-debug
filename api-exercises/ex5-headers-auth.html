@@ -1,0 +1,186 @@
+<!-- EXERCICE : ex5-headers-auth / Thème : Headers HTTP et authentification / Niveau : Avancé -->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice API 5 - Headers HTTP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .api-key-box {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #2196f3;
+        }
+
+        button {
+            width: 100%;
+            background-color: #3498db;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .result {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            min-height: 100px;
+        }
+
+        .user-card {
+            background-color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #27ae60;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .loading {
+            text-align: center;
+            color: #7f8c8d;
+            padding: 20px;
+        }
+
+        .error {
+            background-color: #fee;
+            color: #c00;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 API avec Headers d'authentification</h1>
+        
+        <div class="api-key-box">
+            <strong>ℹ️ Info :</strong> Cette API nécessite une clé d'authentification dans les headers.<br>
+            <code>API Key: demo-key-12345</code>
+        </div>
+
+        <button id="loadUsersBtn">Charger les utilisateurs</button>
+        <button id="loadUserDetailsBtn">Charger les détails utilisateur (ID: 1)</button>
+        
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const API_KEY = 'demo-key-12345';
+        const API_BASE_URL = 'https://jsonplaceholder.typicode.com';
+
+        document.getElementById('loadUsersBtn').addEventListener('click', async function() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p class="loading">Chargement...</p>';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/users`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authentification': `Bearer ${API_KEY}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+
+                const users = await response.json();
+
+                resultDiv.innerHTML = `<h3>Utilisateurs chargés (${users.length})</h3>`;
+                users.slice(0, 3).forEach(user => {
+                    resultDiv.innerHTML += `
+                        <div class="user-card">
+                            <strong>${user.name}</strong><br>
+                            Email: ${user.email}<br>
+                            Ville: ${user.address.city}
+                        </div>
+                    `;
+                });
+
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">Erreur: ${error.message}</div>`;
+            }
+        });
+
+        document.getElementById('loadUserDetailsBtn').addEventListener('click', async function() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p class="loading">Chargement des détails...</p>';
+
+            try {
+                const userId = 1;
+                const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Key': API_KEY,
+                        'Accept': 'application/json',
+                        'User-Agent': 'DebugExercise/1.0'
+                    }
+                });
+
+                const user = await response.json();
+
+                resultDiv.innerHTML = `
+                    <h3>Détails de l'utilisateur</h3>
+                    <div class="user-card">
+                        <strong>Nom:</strong> ${user.name}<br>
+                        <strong>Username:</strong> ${user.username}<br>
+                        <strong>Email:</strong> ${user.email}<br>
+                        <strong>Téléphone:</strong> ${user.phone}<br>
+                        <strong>Site web:</strong> ${user.website}<br>
+                        <strong>Entreprise:</strong> ${user.company.name}
+                    </div>
+                `;
+
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">Erreur: ${error.message}</div>`;
+            }
+        });
+    </script>
+</body>
+</html>
+

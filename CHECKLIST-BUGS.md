@@ -6,23 +6,6 @@ Utilise cette checklist pour vérifier que tu as bien trouvé tous les bugs !
 
 ---
 
-## Démos d'introduction
-
-### demo-html-css.html
-**3 bugs à trouver** :
-- [ ] Le titre n'a pas le style attendu (pas de couleur #333)
-- [ ] L'image ne s'affiche pas (404)
-- [ ] Un texte devrait être visible mais ne l'est pas
-
----
-
-### demo-js.html
-**2 bugs à trouver** :
-- [ ] Le bouton ne fait rien quand on clique dessus
-- [ ] Le compteur ne s'affiche pas / erreur dans la console
-
----
-
 ## Exercices HTML/CSS
 
 ### ex1-image-404.html
@@ -36,7 +19,6 @@ Utilise cette checklist pour vérifier que tu as bien trouvé tous les bugs !
 ### ex2-flex-casse.html
 **2 bugs à trouver** :
 - [ ] Les 3 cartes sont empilées verticalement au lieu d'être en ligne
-- [ ] L'espacement des cartes n'est pas correct
 
 ---
 
@@ -179,6 +161,85 @@ Utilise cette checklist pour vérifier que tu as bien trouvé tous les bugs !
 ### ex4-fetch-posts-bugue.html
 **1 bug à trouver** :
 - [ ] Les articles ne s'affichent pas (erreur dans la console)
+
+---
+
+### ex5-headers-auth.html
+**2 bugs à trouver** :
+- [ ] Le premier bouton ne charge rien (erreur de header)
+- [ ] Les détails utilisateur ne chargent rien non plus
+
+---
+
+### ex6-response-types.html
+**4 bugs à trouver** :
+- [ ] Le bouton "Charger JSON" reste bloqué sur "Chargement..."
+- [ ] Le bouton "Charger Texte" affiche "undefined caractères"
+- [ ] Les statistiques affichent des valeurs incorrectes (undefined)
+- [ ] Le tableau des commentaires affiche "undefined" dans la colonne Nom
+
+---
+
+### ex7-params-query.html
+**2 bugs à trouver** :
+- [ ] La recherche ne fonctionne jamais (erreur 400)
+- [ ] Le filtre par utilisateur ne filtre rien
+
+---
+
+### ex8-missing-keys.html
+**2 bugs à trouver** :
+- [ ] Le nom de l'entreprise ne s'affiche pas (undefined)
+- [ ] L'adresse affiche "undefined" pour la ville
+
+---
+
+## Exercices PHP
+
+### ex1-variables-types.php
+**3 bugs à trouver** :
+- [ ] Le total TTC affiche 4646.5 au lieu de 55.80 (problème de type string/number)
+- [ ] Le nom complet affiche 0 au lieu de "Dupont Marie"
+- [ ] Les calculs s'affichent bizarrement (concaténation au lieu d'addition)
+
+---
+
+### ex2-formulaire-validation.php
+**3 bugs à trouver** :
+- [ ] Le formulaire s'affiche toujours comme "envoyé" même sans cliquer
+- [ ] Erreurs PHP "Undefined index" dans la console
+- [ ] La validation se déclenche même sur page vide
+
+---
+
+### ex3-sessions-login.php
+**3 bugs à trouver** :
+- [ ] La page ne charge pas du tout (erreur fatale)
+- [ ] Après connexion réussie, on reste sur "non connecté"
+- [ ] La déconnexion ne vide pas la session
+
+---
+
+### ex4-tableau-fonctions.php
+**3 bugs à trouver** :
+- [ ] Les produits ne s'affichent pas dans le tableau (erreur fatale)
+- [ ] Message "Undefined index: prix" dans la console
+- [ ] Le prix moyen calculé est incorrect
+
+---
+
+### ex5-fichiers-upload.php
+**3 bugs à trouver** :
+- [ ] Les fichiers ne s'uploadent jamais (erreur de déplacement)
+- [ ] Message "Fichier trop volumineux" même pour petits fichiers
+- [ ] Les fichiers disparaissent après upload
+
+---
+
+### ex6-db-connexion.php
+**2 bugs à trouver** :
+- [ ] Tous les utilisateurs s'affichent au lieu de seulement "Marie"
+- [ ] Erreur après l'affichage des statistiques
 
 ---
 

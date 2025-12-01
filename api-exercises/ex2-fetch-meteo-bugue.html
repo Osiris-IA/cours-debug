@@ -1,0 +1,131 @@
+<!-- EXERCICE : ex2-fetch-meteo-bugue / Thème : API fetch météo / Niveau : Intermédiaire -->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice API 2 - Météo buguée</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #meteoInfo {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+        }
+
+        .temperature {
+            font-size: 3em;
+            color: #e74c3c;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .city-name {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .loading {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Météo du jour</h1>
+        <p>Entrez les coordonnées d'une ville (Paris : 48.8566, 2.3522)</p>
+        
+        <div class="input-group">
+            <input type="text" id="latitude" placeholder="Latitude" value="48.8566">
+            <input type="text" id="longitude" placeholder="Longitude" value="2.3522">
+            <button id="loadMeteo">Obtenir météo</button>
+        </div>
+        
+        <div id="meteoInfo"></div>
+    </div>
+
+    <script>
+        const loadBtn = document.querySelector('#loadMeteo');
+        const meteoInfo = document.querySelector('#meteoInfo');
+        const latInput = document.querySelector('#latitude');
+        const lonInput = document.querySelector('#longitude');
+
+        loadBtn.addEventListener('click', async function() {
+            meteoInfo.innerHTML = '<p class="loading">Chargement...</p>';
+            
+            const lat = latInput.value;
+            const lon = lonInput.value;
+            
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
+            
+            const response = fetch(url);
+            const data = await response.json();
+            
+            const temperature = data.current_weather.temp;
+            const windSpeed = data.current_weather.windspeed;
+            
+            meteoInfo.innerHTML = `
+                <div class="temperature">${temperature}°C</div>
+                <p>Vitesse du vent : ${windSpeed} km/h</p>
+            `;
+        });
+    </script>
+</body>
+</html>
+
