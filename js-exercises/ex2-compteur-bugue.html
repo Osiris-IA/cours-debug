@@ -2,92 +2,92 @@
 
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Exercice JS 2 - Compteur bugué</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 40px;
-            text-align: center;
-            background-color: #ecf0f1;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        padding: 40px;
+        text-align: center;
+        background-color: #ecf0f1;
+      }
 
-        h1 {
-            color: #2c3e50;
-        }
+      h1 {
+        color: #2c3e50;
+      }
 
-        .compteur-display {
-            font-size: 4em;
-            color: #3498db;
-            margin: 30px 0;
-            font-weight: bold;
-        }
+      .compteur-display {
+        font-size: 4em;
+        color: #3498db;
+        margin: 30px 0;
+        font-weight: bold;
+      }
 
-        .buttons-container {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
+      .buttons-container {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+      }
 
-        button {
-            padding: 15px 30px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            color: white;
-        }
+      button {
+        padding: 15px 30px;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        color: white;
+      }
 
-        #incrementBtn {
-            background-color: #27ae60;
-        }
+      #incrementBtn {
+        background-color: #27ae60;
+      }
 
-        #decrementBtn {
-            background-color: #e74c3c;
-        }
+      #decrementBtn {
+        background-color: #e74c3c;
+      }
 
-        #resetBtn {
-            background-color: #95a5a6;
-        }
+      #resetBtn {
+        background-color: #95a5a6;
+      }
     </style>
-</head>
-<body>
-    <h1>Compteur avec +/- </h1>
+  </head>
+  <body>
+    <h1>Compteur avec +/-</h1>
     <p>Le compteur devrait augmenter ou diminuer de 1 à chaque clic</p>
-    
+
     <div class="compteur-display" id="counter">0</div>
-    
+
     <div class="buttons-container">
-        <button id="incrementBtn">+ 1</button>
-        <button id="decrementBtn">- 1</button>
-        <button id="resetBtn">Reset</button>
+      <button id="incrementBtn">+ 1</button>
+      <button id="decrementBtn">- 1</button>
+      <button id="resetBtn">Reset</button>
     </div>
 
     <script>
-        let count = "0";
+      let count = 0;
+      const counterDisplay = document.querySelector("#counter");
+      const incrementBtn = document.querySelector("#incrementBtn");
+      const decrementBtn = document.querySelector("#decrementBtn");
+      const resetBtn = document.querySelector("#resetBtn");
 
-        const counterDisplay = document.querySelector('#counter');
-        const incrementBtn = document.querySelector('#incrementBtn');
-        const decrementBtn = document.querySelector('#decrementBtn');
-        const resetBtn = document.querySelector('#resetBtn');
+      incrementBtn.addEventListener("click", function () {
+        debugger
+        count = count + 1;
+        counterDisplay.textContent = count;
+      });
 
-        incrementBtn.addEventListener('click', function() {
-            count = count + 1;
-            counterDisplay.textContent = count;
-        });
+      decrementBtn.addEventListener("click", function () {
+        count = count - 1;
+        counterDisplay.textContent = count;
+      });
 
-        decrementBtn.addEventListener('click', function() {
-            count = count - 1;
-            counterDisplay.textContent = count;
-        });
-
-        resetBtn.addEventListener('click', function() {
-            count = 0;
-            counterDisplay.textContent = count;
-        });
+      resetBtn.addEventListener("click", function () {
+        debugger;
+        count = 0;
+        counterDisplay.textContent = count;
+      });
     </script>
-</body>
+  </body>
 </html>
-

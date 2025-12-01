@@ -2,74 +2,73 @@
 
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Exercice JS 4 - DOM null</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 40px;
-            background-color: #fff;
-            text-align: center;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        padding: 40px;
+        background-color: #fff;
+        text-align: center;
+      }
 
-        h1 {
-            color: #2c3e50;
-        }
+      h1 {
+        color: #2c3e50;
+      }
 
-        #displayBox {
-            background-color: #3498db;
-            color: white;
-            padding: 30px;
-            margin: 20px auto;
-            max-width: 400px;
-            border-radius: 8px;
-            font-size: 20px;
-        }
+      #displayBox {
+        background-color: #3498db;
+        color: white;
+        padding: 30px;
+        margin: 20px auto;
+        max-width: 400px;
+        border-radius: 8px;
+        font-size: 20px;
+      }
 
-        button {
-            background-color: #27ae60;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            margin: 10px;
-        }
+      button {
+        background-color: #27ae60;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 10px;
+      }
 
-        button:hover {
-            background-color: #229954;
-        }
+      button:hover {
+        background-color: #229954;
+      }
     </style>
-    
-    <script>
-        const box = document.querySelector('#display-box');
-        const changeColorBtn = document.querySelector('#changeColor');
-        const changeTextBtn = document.querySelector('#changeText');
-
-        changeColorBtn.addEventListener('click', function() {
-            const colors = ['#e74c3c', '#9b59b6', '#f39c12', '#1abc9c', '#34495e'];
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            box.style.backgroundColor = randomColor;
-        });
-
-        changeTextBtn.addEventListener('click', function() {
-            const texts = ['Super !', 'Génial !', 'Bravo !', 'Excellent !', 'Fantastique !'];
-            const randomText = texts[Math.floor(Math.random() * texts.length)];
-            box.textContent = randomText;
-        });
-    </script>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Exercice DOM null</h1>
     <p>Les boutons devraient changer la couleur et le texte de la boîte</p>
-    
+
     <div id="displayBox">Texte initial</div>
-    
+
     <button id="changeColor">Changer la couleur</button>
     <button id="changeText">Changer le texte</button>
-</body>
-</html>
 
+    <script>
+      const box = document.querySelector("#displayBox");
+      const changeColorBtn = document.querySelector("#changeColor");
+      const changeTextBtn = document.querySelector("#changeText");
+
+      changeColorBtn.addEventListener("click", function () {
+        const colors = ["#e74c3c", "#9b59b6", "#f39c12", "#1abc9c", "#34495e"];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        debugger;
+        box.style.backgroundColor = randomColor;
+      });
+      changeTextBtn.addEventListener("click", function () {
+        const texts = ["Super !", "Génial !", "Bravo !", "Excellent !", "Fantastique !"];
+        const randomText = texts[Math.floor(Math.random() * texts.length)];
+        box.textContent = randomText;
+      });
+    </script>
+  </body>
+</html>

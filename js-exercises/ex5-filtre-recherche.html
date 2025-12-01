@@ -123,15 +123,16 @@
         const searchInput = document.querySelector('#searchInput');
         const userItems = document.querySelectorAll('.user-item');
         const noResults = document.querySelector('#noResults');
-
+        debugger;
         searchInput.addEventListener('input', function() {
-            const searchTerm = searchInput.value.toLowerCase;
+            debugger;
+            const searchTerm = searchInput.value.toLowerCase();
             let visibleCount = 0;
-
+            debugger;
             userItems.forEach(item => {
                 const userName = item.querySelector('.user-name').textContent.toLowerCase();
                 const userEmail = item.querySelector('.user-email').textContent.toLowerCase();
-
+                debugger;
                 if (userName.includes(searchTerm) || userEmail.includes(searchTerm)) {
                     item.classList.remove('hidden');
                     visibleCount++;

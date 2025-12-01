@@ -2,199 +2,197 @@
 
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Exercice JS 7 - Validation de formulaire</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        padding: 40px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
 
-        .form-container {
-            max-width: 500px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
+      .form-container {
+        max-width: 500px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
 
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-        }
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 30px;
+      }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+      .form-group {
+        margin-bottom: 20px;
+      }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #2c3e50;
-            font-weight: bold;
-        }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: #2c3e50;
+        font-weight: bold;
+      }
 
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+      }
 
-        input.error {
-            border-color: #e74c3c;
-        }
+      input.error {
+        border-color: #e74c3c;
+      }
 
-        .error-message {
-            color: #e74c3c;
-            font-size: 14px;
-            margin-top: 5px;
-            display: none;
-        }
+      .error-message {
+        color: #e74c3c;
+        font-size: 14px;
+        margin-top: 5px;
+        display: none;
+      }
 
-        .error-message.show {
-            display: block;
-        }
+      .error-message.show {
+        display: block;
+      }
 
-        .submit-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+      .submit-btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        font-weight: bold;
+      }
 
-        .submit-btn:hover {
-            background-color: #229954;
-        }
+      .submit-btn:hover {
+        background-color: #229954;
+      }
 
-        .success-message {
-            background-color: #27ae60;
-            color: white;
-            padding: 15px;
-            border-radius: 5px;
-            text-align: center;
-            margin-top: 20px;
-            display: none;
-        }
+      .success-message {
+        background-color: #27ae60;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+        margin-top: 20px;
+        display: none;
+      }
 
-        .success-message.show {
-            display: block;
-        }
+      .success-message.show {
+        display: block;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="form-container">
-        <h1>Inscription</h1>
-        
-        <form id="registrationForm">
-            <div class="form-group">
-                <label for="username">Nom d'utilisateur</label>
-                <input type="text" id="username" name="username">
-                <div class="error-message" id="usernameError">Le nom doit contenir au moins 3 caractères</div>
-            </div>
+      <h1>Inscription</h1>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email">
-                <div class="error-message" id="emailError">Veuillez entrer un email valide</div>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password">
-                <div class="error-message" id="passwordError">Le mot de passe doit contenir au moins 6 caractères</div>
-            </div>
-
-            <div class="form-group">
-                <label for="confirmPassword">Confirmer le mot de passe</label>
-                <input type="password" id="confirmPassword" name="confirmPassword">
-                <div class="error-message" id="confirmError">Les mots de passe ne correspondent pas</div>
-            </div>
-
-            <button type="submit" class="submit-btn">S'inscrire</button>
-        </form>
-
-        <div class="success-message" id="successMessage">
-            Inscription réussie ! Bienvenue 🎉
+      <form id="registrationForm">
+        <div class="form-group">
+          <label for="username">Nom d'utilisateur</label>
+          <input type="text" id="username" name="username" />
+          <div class="error-message" id="usernameError">Le nom doit contenir au moins 3 caractères</div>
         </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" />
+          <div class="error-message" id="emailError">Veuillez entrer un email valide</div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" name="password" />
+          <div class="error-message" id="passwordError">Le mot de passe doit contenir au moins 6 caractères</div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirmer le mot de passe</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" />
+
+          <div class="error-message" id="confirmError">Les mots de passe ne correspondent pas</div>
+        </div>
+
+        <button type="submit" class="submit-btn">S'inscrire</button>
+      </form>
+
+      <div class="success-message" id="successMessage">Inscription réussie ! Bienvenue 🎉</div>
     </div>
 
     <script>
-        const form = document.querySelector('#registrationForm');
-        const username = document.querySelector('#username');
-        const email = document.querySelector('#email');
-        const password = document.querySelector('#password');
-        const confirmPassword = document.querySelector('#confirmPassword');
-        const successMessage = document.querySelector('#successMessage');
+      const form = document.querySelector("#registrationForm");
+      const username = document.querySelector("#username");
+      const email = document.querySelector("#email");
+      const password = document.querySelector("#password");
+      const confirmPassword = document.querySelector("#confirmPassword");
+      const successMessage = document.querySelector("#successMessage");
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            let isValid = true;
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-            if (username.value.length < 3) {
-                showError('username');
-                isValid = false;
-            } else {
-                hideError('username');
-            }
+        let isValid = true;
 
-            if (!email.value.includes('@')) {
-                showError('email');
-                isValid = false;
-            } else {
-                hideError('email');
-            }
-
-            if (password.value.length < 6) {
-                showError('password');
-                isValid = false;
-            } else {
-                hideError('password');
-            }
-
-            if (password.value !== confirmPassword.value) {
-                showError('confirm');
-                isValid = false;
-            } else {
-                hideError('confirm');
-            }
-
-            if (isValid) {
-                form.style.display = 'none';
-                successMessage.classList.add('show');
-            }
-        });
-
-        function showError(fieldName) {
-            const field = document.querySelector('#' + fieldName);
-            const errorMsg = document.querySelector('#' + fieldName + 'Error');
-            
-            field.classList.add('error');
-            errorMsg.classList.add('show');
+        if (username.value.length < 3) {
+          showError("username");
+          isValid = false;
+        } else {
+          hideError("username");
         }
 
-        function hideError(fieldName) {
-            const field = document.querySelector(`#${fieldName}`);
-            const errorMsg = document.querySelector(`#${fieldName}Error`);
-            
-            field.classList.remove('error');
-            errorMsg.classList.remove('show');
+        if (!email.value.includes("@")) {
+          showError("email");
+          isValid = false;
+        } else {
+          hideError("email");
         }
+
+        if (password.value.length < 6) {
+          showError("password");
+          isValid = false;
+        } else {
+          hideError("password");
+        }
+
+        if (password.value !== confirmPassword.value) {
+          showError("confirm");
+          isValid = false;
+        } else {
+          hideError("confirmPassword");
+        }
+
+        if (isValid) {
+          form.style.display = "none";
+          successMessage.classList.add("show");
+        }
+      });
+
+      function showError(fieldName) {
+        const field = document.querySelector("#" + fieldName);
+        const errorMsg = document.querySelector("#" + fieldName + "Error");
+
+        field.classList.add("error");
+        errorMsg.classList.add("show");
+      }
+
+      function hideError(fieldName) {
+        const field = document.querySelector("#" + fieldName);
+        const errorMsg = document.querySelector("#" + fieldName + "Error");
+
+        field.classList.remove("error");
+        errorMsg.classList.remove("show");
+      }
     </script>
-</body>
+  </body>
 </html>
-
