@@ -1,0 +1,558 @@
+<!-- EXERCICE : ex9-dashboard-layout / Thème : Layout complexe multi-colonnes / Niveau : Avancé -->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 9 - Dashboard complexe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 70px 1fr;
+            grid-template-areas:
+                "sidebar header"
+                "sidebar main";
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+            background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px;
+            position: fixed;
+            width: 250px;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header p {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-bottom: 10px;
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 12px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .nav-menu a.active {
+            background-color: rgba(255,255,255,0.2);
+            font-weight: 600;
+        }
+
+        .header {
+            grid-area: header;
+            background-color: white;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-search {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 30px;
+        }
+
+        .header-search input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .header-search input:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .notification-badge {
+            position: relative;
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .notification-badge:after {
+            content: "3";
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .main-content {
+            grid-area: main;
+            padding: 30px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 2em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #6c757d;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .stat-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-card-header h3 {
+            font-size: 0.9em;
+            color: #6c757d;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+
+        .stat-icon.blue { background-color: #e3f2fd; color: #2196f3; }
+        .stat-icon.green { background-color: #e8f5e9; color: #4caf50; }
+        .stat-icon.orange { background-color: #fff3e0; color: #ff9800; }
+        .stat-icon.purple { background-color: #f3e5f5; color: #9c27b0; }
+
+        .stat-value {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .stat-change {
+            font-size: 0.85em;
+            color: #27ae60;
+        }
+
+        .stat-change.negative {
+            color: #e74c3c;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 25px;
+        }
+
+        .content-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .content-card h2 {
+            font-size: 1.3em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f3f5;
+        }
+
+        .table-container {
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: #f8f9fa;
+        }
+
+        thead th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        tbody td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #f1f3f5;
+        }
+
+        tbody:hover tr {
+            background-color: #f8f9fa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .status-badge.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-badge.danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f3f5;
+            display: flex;
+            gap: 15px;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e3f2fd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .activity-content h4 {
+            font-size: 0.95em;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .activity-content p {
+            font-size: 0.85em;
+            color: #6c757d;
+        }
+
+        .activity-time {
+            font-size: 0.75em;
+            color: #adb5bd;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 1200px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+                grid-template-rows: 70px 1fr;
+                grid-template-areas:
+                    "header"
+                    "main";
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Dashboard</h2>
+                <p>Admin Panel v2.0</p>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#" class="active">📊 Tableau de bord</a></li>
+                    <li><a href="#">👥 Utilisateurs</a></li>
+                    <li><a href="#">📦 Produits</a></li>
+                    <li><a href="#">💰 Ventes</a></li>
+                    <li><a href="#">📈 Analytiques</a></li>
+                    <li><a href="#">⚙️ Paramètres</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <header class="header">
+            <div class="header-title">
+                <h2>Vue d'ensemble</h2>
+            </div>
+            <div class="header-search">
+                <input type="text" placeholder="Rechercher...">
+            </div>
+            <div class="header-actions">
+                <div class="notification-badge">🔔</div>
+                <div class="user-avatar">JD</div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Bienvenue sur votre Dashboard</h1>
+                <p>Vue d'ensemble de vos statistiques et activités récentes</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <h3>Revenus totaux</h3>
+                        <div class="stat-icon blue">💰</div>
+                    </div>
+                    <div class="stat-value">45 320€</div>
+                    <div class="stat-change">↑ +12.5% ce mois</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <h3>Nouveaux clients</h3>
+                        <div class="stat-icon green">👥</div>
+                    </div>
+                    <div class="stat-value">1,234</div>
+                    <div class="stat-change">↑ +8.2% ce mois</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <h3>Commandes</h3>
+                        <div class="stat-icon orange">📦</div>
+                    </div>
+                    <div class="stat-value">892</div>
+                    <div class="stat-change negative">↓ -3.1% ce mois</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <h3>Satisfaction</h3>
+                        <div class="stat-icon purple">⭐</div>
+                    </div>
+                    <div class="stat-value">98%</div>
+                    <div class="stat-change">↑ +2.4% ce mois</div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h2>Dernières commandes</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Client</th>
+                                    <th>Montant</th>
+                                    <th>Statut</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#12345</td>
+                                    <td>Marie Dupont</td>
+                                    <td>234€</td>
+                                    <td><span class="status-badge success">Livré</span></td>
+                                    <td>01/12/2025</td>
+                                </tr>
+                                <tr>
+                                    <td>#12344</td>
+                                    <td>Pierre Martin</td>
+                                    <td>156€</td>
+                                    <td><span class="status-badge warning">En cours</span></td>
+                                    <td>30/11/2025</td>
+                                </tr>
+                                <tr>
+                                    <td>#12343</td>
+                                    <td>Sophie Bernard</td>
+                                    <td>489€</td>
+                                    <td><span class="status-badge success">Livré</span></td>
+                                    <td>29/11/2025</td>
+                                </tr>
+                                <tr>
+                                    <td>#12342</td>
+                                    <td>Lucas Petit</td>
+                                    <td>92€</td>
+                                    <td><span class="status-badge danger">Annulé</span></td>
+                                    <td>28/11/2025</td>
+                                </tr>
+                                <tr>
+                                    <td>#12341</td>
+                                    <td>Emma Dubois</td>
+                                    <td>345€</td>
+                                    <td><span class="status-badge success">Livré</span></td>
+                                    <td>27/11/2025</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h2>Activité récente</h2>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-icon">📦</div>
+                            <div class="activity-content">
+                                <h4>Nouvelle commande</h4>
+                                <p>Commande #12345 créée</p>
+                                <div class="activity-time">Il y a 5 min</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">👥</div>
+                            <div class="activity-content">
+                                <h4>Nouveau client</h4>
+                                <p>Sophie Bernard s'est inscrite</p>
+                                <div class="activity-time">Il y a 1h</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">💰</div>
+                            <div class="activity-content">
+                                <h4>Paiement reçu</h4>
+                                <p>345€ de Emma Dubois</p>
+                                <div class="activity-time">Il y a 2h</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">⭐</div>
+                            <div class="activity-content">
+                                <h4>Nouvel avis</h4>
+                                <p>5 étoiles sur la commande #12340</p>
+                                <div class="activity-time">Il y a 3h</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+

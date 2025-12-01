@@ -1,0 +1,366 @@
+<!-- EXERCICE : ex8-cascade-css-complexe / Thème : Cascade CSS et spécificité / Niveau : Avancé -->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 8 - Cascade CSS complexe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .card p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .card .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .card .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .card-premium {
+            border: 3px solid #f39c12;
+            position: relative;
+        }
+
+        .card-premium:before {
+            content: "⭐ PREMIUM";
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background-color: #f39c12;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .card-premium h2 {
+            color: #f39c12;
+        }
+
+        .card .btn {
+            background-color: #f39c12;
+        }
+
+        .card-premium .btn:hover {
+            background-color: #e67e22;
+        }
+
+        #special-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        div#special-card h2 {
+            color: white;
+            border-bottom-color: white;
+        }
+
+        #special-card p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d !important;
+        }
+
+        .card .btn-secondary {
+            background-color: #95a5a6;
+            margin-left: 10px;
+        }
+
+        .pricing-section {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-top: 40px;
+        }
+
+        .pricing-section h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .pricing-card {
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .pricing-card:hover {
+            border-color: #3498db;
+            transform: scale(1.05);
+        }
+
+        .pricing-card h3 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .pricing-card .price {
+            font-size: 3em;
+            color: #3498db;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .pricing-card .price span {
+            font-size: 0.4em;
+            color: #7f8c8d;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin: 20px 0;
+            padding: 0;
+        }
+
+        .pricing-card ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ecf0f1;
+            color: #555;
+        }
+
+        .pricing-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-card .btn-price {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .pricing-card:hover .btn-price {
+            background-color: #2980b9 !important;
+        }
+
+        .pricing-card.featured {
+            border-color: #27ae60;
+            background-color: #e8f8f5;
+            transform: scale(1.08);
+        }
+
+        .pricing-card.featured h3 {
+            color: #27ae60;
+        }
+
+        .pricing-card.featured .price {
+            color: #27ae60;
+        }
+
+        .pricing-card.featured .btn-price {
+            background-color: #27ae60 !important;
+        }
+
+        .pricing-card.featured .btn-price:hover {
+            background-color: #229954;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding: 30px;
+            background-color: #34495e;
+            color: white;
+            border-radius: 10px;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Plateforme de Services Premium</h1>
+            <p>Découvrez nos offres et services exclusifs</p>
+        </header>
+
+        <div class="cards-container">
+            <div class="card">
+                <h2>Service Standard</h2>
+                <p>Notre offre de base comprend tous les essentiels pour démarrer votre projet. Idéal pour les petites équipes.</p>
+                <a href="#" class="btn">En savoir plus</a>
+                <a href="#" class="btn btn-secondary">Documentation</a>
+            </div>
+
+            <div class="card card-premium">
+                <h2>Service Premium</h2>
+                <p>Accédez à des fonctionnalités avancées et un support prioritaire. Parfait pour les projets ambitieux.</p>
+                <a href="#" class="btn">Souscrire maintenant</a>
+                <a href="#" class="btn btn-secondary">Comparer</a>
+            </div>
+
+            <div class="card" id="special-card">
+                <h2>Service Entreprise</h2>
+                <p>Solution complète avec support dédié, SLA garantis et fonctionnalités sur mesure pour votre entreprise.</p>
+                <a href="#" class="btn">Contactez-nous</a>
+                <a href="#" class="btn btn-secondary">Démo personnalisée</a>
+            </div>
+        </div>
+
+        <div class="pricing-section">
+            <h2>Nos Tarifs</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">9€<span>/mois</span></div>
+                    <ul>
+                        <li>5 projets</li>
+                        <li>Support email</li>
+                        <li>1 Go de stockage</li>
+                        <li>Accès basique</li>
+                    </ul>
+                    <a href="#" class="btn-price">Choisir Starter</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <h3>Pro</h3>
+                    <div class="price">29€<span>/mois</span></div>
+                    <ul>
+                        <li>Projets illimités</li>
+                        <li>Support prioritaire</li>
+                        <li>50 Go de stockage</li>
+                        <li>Accès complet</li>
+                        <li>Analyses avancées</li>
+                    </ul>
+                    <a href="#" class="btn-price">Choisir Pro</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Entreprise</h3>
+                    <div class="price">99€<span>/mois</span></div>
+                    <ul>
+                        <li>Tout illimité</li>
+                        <li>Support dédié 24/7</li>
+                        <li>Stockage illimité</li>
+                        <li>API personnalisée</li>
+                        <li>Intégrations sur mesure</li>
+                    </ul>
+                    <a href="#" class="btn-price">Choisir Entreprise</a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Plateforme Services. Tous droits réservés.</p>
+            <p>
+                <a href="#">Mentions légales</a> | 
+                <a href="#">Politique de confidentialité</a> | 
+                <a href="#">Contact</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
+
